@@ -8,7 +8,7 @@ function Nav() {
   }
   return (
     <nav>
-      <h3> Fantasy </h3>
+      <h3> Fantasy League </h3>
         <ul className={"nav-links"}>
           <Link style={navStyle} to={"/"}>
             <li>Match List</li>
@@ -16,9 +16,9 @@ function Nav() {
           <Link style={navStyle} to={"/about"}>
             <li>About</li>
           </Link>
-          <Link style={navStyle} to={"/login"}>
+          {/* <Link style={navStyle} to={"/login"}>
             <li>Login</li>
-          </Link>
+          </Link> */}
         </ul>
     </nav>
   );

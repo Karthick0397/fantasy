@@ -72,12 +72,12 @@ const TeamSelect = ({match}) => {
     const [AllPlayers,setAllPlayers]=useState([])
     const [data,setData]= useState([])
     const [matchId, setMatchId] = useState(match.params.id)
-    const [wicketKeeper,setWicketKeeper] = useState([])
-    const [batsman,setBatsman] = useState([])
-    const [bowler,setBowler] = useState([])
-    const [allRounder,setAllRounder] = useState([])
-    const [squad,setSquad] = useState([])
-    const [TeamLimit,setTeamLimit] = useState([])
+    // const [wicketKeeper,setWicketKeeper] = useState([])
+    // const [batsman,setBatsman] = useState([])
+    // const [bowler,setBowler] = useState([])
+    // const [allRounder,setAllRounder] = useState([])
+    // const [squad,setSquad] = useState([])
+    // const [TeamLimit,setTeamLimit] = useState([])
     const [selectedPlayers,setSelectedPlayer] = useState([])
     const roles = [{roleKey:'wicket_keeper',disp_name:"Wicket Keeper",id:1} , {roleKey:'batsman',disp_name:"Batsman",id:2}, {roleKey:'bowler',disp_name:"Bowler",id:3}, {roleKey:'all_rounder', disp_name:"All Rounder",id:4}]
     const [tabValue, setTabValue] = React.useState(0);
@@ -157,7 +157,7 @@ const TeamSelect = ({match}) => {
     }
    const handleSubmit = () => {
         console.log(selectedPlayers)
-        alert('SuccessFully Selected Team')
+        alert('Team Submitted SuccessFully')
    }
     useEffect(() => {
         setData(AllPlayers.filter(item => item.role === role))
