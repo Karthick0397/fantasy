@@ -8,7 +8,7 @@ function Nav() {
   }
   return (
     <nav>
-      <h3> Logo </h3>
+      <h3> Fantasy </h3>
         <ul className={"nav-links"}>
           <Link style={navStyle} to={"/"}>
             <li>Match List</li>

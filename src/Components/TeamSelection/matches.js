@@ -10,9 +10,12 @@ const useStyles = makeStyles((theme) => ({
       padding:50
     },
     paper: {
+        backgroundColor:'whitesmoke',
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      fontSize: 20,
+      fontWeight: 'bold'
     },
   }));
 const MatchList = () => {
