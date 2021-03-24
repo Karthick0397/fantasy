@@ -72,10 +72,10 @@ const TeamSelect = ({match}) => {
     const [AllPlayers,setAllPlayers]=useState([])
     const [data,setData]= useState([])
     const [matchId, setMatchId] = useState(match.params.id)
-    // const [wicketKeeper,setWicketKeeper] = useState([])
-    // const [batsman,setBatsman] = useState([])
-    // const [bowler,setBowler] = useState([])
-    // const [allRounder,setAllRounder] = useState([])
+    const [wicketKeeper,setWicketKeeper] = useState([])
+    const [batsman,setBatsman] = useState([])
+    const [bowler,setBowler] = useState([])
+    const [allRounder,setAllRounder] = useState([])
     // const [squad,setSquad] = useState([])
     // const [TeamLimit,setTeamLimit] = useState([])
     const [selectedPlayers,setSelectedPlayer] = useState([])
@@ -131,22 +131,23 @@ const TeamSelect = ({match}) => {
         console.log(matchId)
     },[])
     const addRemovePlayer = (player) => {
-        let TeamMinCount = selectedPlayers.filter(item => item.team_id === player.team_id)
-        let WicketKeeperCount = selectedPlayers.filter(item => item.role === player.role)
-        let BatsmanCount = selectedPlayers.filter(item => item.role === player.role)
-        let BowlerCount = selectedPlayers.filter(item => item.role === player.role)
-        let AllRounder = selectedPlayers.filter(item => item.role === player.role)
+        let TeamMinCount = selectedPlayers.filter(item => item.team_id === player.team_id )
+        let WicketKeeperCount = selectedPlayers.filter(item => 'wicket_keeper' === player.role && item.role === 'wicket_keeper')
+        let BatsmanCount = selectedPlayers.filter(item => 'batsman' === player.role && item.role === 'batsman')
+        let BowlerCount = selectedPlayers.filter(item => 'bowler' === player.role && item.role === 'bowler')
+        let AllRounderCount = selectedPlayers.filter(item => 'all_rounder' === player.role && item.role === 'all_rounder')
+        console.log(BatsmanCount)
         if(TotalCredits >= 0) {
             if(TeamMinCount.length <= 6 && selectedPlayers.length <= 10 || player.isAdded){
-                if(WicketKeeperCount.length <= 3 && BatsmanCount.length <= 6 && BowlerCount.length <= 4 && AllRounder.length <= 6 || player.isAdded) {
-                const squads = [...AllPlayers]
-                const index = squads.indexOf(player)
-                squads[index] = { ...squads[index] }
-                squads[index].isAdded = !squads[index].isAdded
-                setAllPlayers(squads)
-                setTotalCredits(!player.isAdded ? TotalCredits - player.series_player_credit : TotalCredits + player.series_player_credit )
+                if((WicketKeeperCount.length <=3 && BatsmanCount.length <=5 && BowlerCount.length <=5 && AllRounderCount.length <=3 )|| player.isAdded ) {
+                          const squads = [...AllPlayers]
+                          const index = squads.indexOf(player)
+                          squads[index] = { ...squads[index] }
+                          squads[index].isAdded = !squads[index].isAdded
+                          setAllPlayers(squads)
+                          setTotalCredits(!player.isAdded ? TotalCredits - player.series_player_credit : TotalCredits + player.series_player_credit )                       
                 } else {
-                    alert('Error')
+                    alert('Please Check Team Players')
                 }
             } else {
                  alert('You Can only Select 6 Players on Same Team')
@@ -156,16 +157,38 @@ const TeamSelect = ({match}) => {
         }
     }
    const handleSubmit = () => {
-        console.log(selectedPlayers)
-        alert('Team Submitted SuccessFully')
+        if(validate()){
+          alert('Team Submitted SuccessFully')
+        }
+   }
+
+   const validate = () => {
+     if(wicketKeeper.length >= 1 && wicketKeeper.length <=4)  {
+      if(batsman.length >= 3 && batsman.length <=6) {
+        if(bowler.length >= 3 && bowler.length <=6) {
+          if(allRounder.length >= 1 && bowler.length <=4) {
+                return true
+              } else {
+                alert('Please Select atleast 1 ALLROUND and Max 4 ALLROUND')
+              }
+            } else {
+              alert('Please Select atleast 3 BOWL and Max 6 BOWL')
+            }
+          } else {
+            alert('Please Select atleast 3 BATS and Max 6 BATS')
+          }
+        } else {
+          alert('Please Select atleast 1 WK and Max 3 WK')
+          return false
+        }
    }
     useEffect(() => {
         setData(AllPlayers.filter(item => item.role === role))
         setSelectedPlayer(AllPlayers.filter(item => item.isAdded === true))
-        // setWicketKeeper(AllPlayers.filter(item => item.isAdded === true && item.role === 'wicket_keeper'))
-        // setBowler(AllPlayers.filter(item => item.isAdded === true && item.role === 'bowler'))
-        // setBatsman(AllPlayers.filter(item => item.isAdded === true && item.role === 'batsman'))
-        // setAllRounder(AllPlayers.filter(item => item.isAdded === true && item.role === 'all_rounder'))
+        setWicketKeeper(AllPlayers.filter(item => item.isAdded === true && item.role === 'wicket_keeper'))
+        setBowler(AllPlayers.filter(item => item.isAdded === true && item.role === 'bowler'))
+        setBatsman(AllPlayers.filter(item => item.isAdded === true && item.role === 'batsman'))
+        setAllRounder(AllPlayers.filter(item => item.isAdded === true && item.role === 'all_rounder'))
     },[AllPlayers])
 
     return ( 
@@ -221,7 +244,6 @@ const TeamSelect = ({match}) => {
             </TabPanel>
             )}    
         </div>
-        {console.log(selectedPlayers)}
         </Grid>
             <Grid item xs={6} sm={3}>
             {/* {selectedPlayers.map(play => ( */}
@@ -255,9 +277,9 @@ const TeamSelect = ({match}) => {
         : 'Select Players'}
             </Grid>
             </Grid>
-            <Link to='/'>
+            {/* <Link to='/'> */}
                 <Button onClick={() => handleSubmit()} variant={'contained'} color='primary'>Save</Button>
-            </Link>
+            {/* </Link> */}
         </>
      );
 }
